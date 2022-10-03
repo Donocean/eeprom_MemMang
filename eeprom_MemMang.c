@@ -34,7 +34,7 @@
  * @param: dataId   可取范围见.h文件variableLists枚举定义
  * @usage: 想将 int g_mySensorData; 存储到eeprom
  *         1. 首先在枚举变量中加入变量名，如头文件所示
- *         2. 然后调用saveDataToEeprom((void*)&g_mySensorData, sizeof(g_mySensorData), G_MYSENSORDATA);
+ *         2. 然后调用writeDataToEEprom((void*)&g_mySensorData, sizeof(g_mySensorData), G_MYSENSORDATA);
  * @retval: 0 写入成功 
  *          1 写入失败 
  * 失败的原因:

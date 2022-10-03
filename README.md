@@ -2,7 +2,7 @@
 
 传统使用eeprom你需要**记住不同数据在eeprom片内的地址**
 
-### 特点：
+### 本程序特点：
 
 - 简单易用，只有**两个API函数**
 	- `void readDataFromEEprom(void* dataAddr, variableLists dataId)`:读数据
@@ -18,6 +18,37 @@
 - `EE_MAXADDR`:  当前型号的eeprom容量大小减一
 - `eepromWirte`: eeprom写操作驱动函数名
 - `eepromRead`:  eeprom读操作驱动函数名
+
+应用实例：将变量`float g_mySensorData = 3.14`通过api函数写入eeprom
+
+ 首先先在头文件添加变量名，用于管理变量
+```c
+typedef enum
+{
+	// 用户将变量名添加到下面
+	G_MYSENSORDATA,
+	
+
+	// DATA_NUM用于标识eeprom中一共存了多少变量(不允许删改)
+	DATA_NUM,
+}variableLists;
+```
+
+使用API函数
+```c
+float g_mySensorData = 3.14;
+
+void func(void)
+{
+	float tmp = 0;
+
+	// 将数据写入eeprom
+	writeDataToEEprom((void*)&g_mySensorData, sizeof(g_mySensorData), G_MYSENSORDATA);
+
+	// 从eeprom中读取数据
+	readDataFromEEprom((void*)&tmp, G_MYSENSORDATA);
+}
+```
 
 ---
 
