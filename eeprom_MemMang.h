@@ -1,3 +1,13 @@
+/**
+ * @file eeprom_MemMang.h
+ * @author Donocean (1184427366@qq.com)
+ * @brief 轻量化的用于eeprom的空间管理
+ * @version 1.0
+ * @date 2022-010-3
+ * 
+ * @copyright Copyright (c) 2022, Donocean
+ */
+
 #ifndef __EEPROM_MEMMANG_H_
 #define __EEPROM_MEMMANG_H_
 
@@ -25,7 +35,6 @@ typedef enum
 	// DATA_NUM用于标识eeprom中一共存了多少变量(不允许删改)
 	DATA_NUM,
 }variableLists;
-
 
 
 void readDataFromEEprom(void* dataAddr, variableLists dataId);

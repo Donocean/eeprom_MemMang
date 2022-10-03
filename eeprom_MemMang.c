@@ -1,3 +1,13 @@
+/**
+ * @file eeprom_MemMang.c
+ * @author Donocean (1184427366@qq.com)
+ * @brief 轻量化的用于eeprom的空间管理
+ * @version 1.0
+ * @date 2022-010-3
+ * 
+ * @copyright Copyright (c) 2022, Donocean
+ */
+
 #include "eeprom_MemMang.h"
 #include <stdlib.h>
 #include <stddef.h>
