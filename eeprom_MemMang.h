@@ -14,11 +14,16 @@
 /* 用户自己编写eeprom的驱动文件 */
 //#include "24cxx.h" 
 
+/* 用户根据自己单片机位数修改 */
+typedef unsigned char e_uint8;
+typedef unsigned short e_uint16;
+typedef unsigned int e_uint32;
+
 /* 用户需将自己读写eeprom的函数填入下宏中 */
 /* eeprom最大容量减一(以字节为单位)，如24C02宏大小为255 */
 #define EE_MAXADDR 
 
-/* 函数类型 void (*) (unsigned int eepromAddr, unsigned char* dataAddr, unsigned char num) */
+/* 函数类型 void (*) (uint32 eepromAddr, uint8* dataAddr, uint8 num) */
 #define eepromWirte 
 #define eepromRead  
 
@@ -38,6 +43,6 @@ typedef enum
 
 
 void readDataFromEEprom(void* dataAddr, variableLists dataId);
-unsigned char writeDataToEEprom(void* dataAddr, unsigned char dataSize, variableLists dataId);
+unsigned char writeDataToEEprom(void* dataAddr, e_uint8 dataSize, variableLists dataId);
 #endif /* __EEPROM_MEMMANG_H_ */
 

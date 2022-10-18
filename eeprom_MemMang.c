@@ -44,12 +44,12 @@
  *			4. 堆申请失败
  * @warning: 因为数据的偏移地址是根据每个数据大小决定的，因此写入时必须按照variableLists中的顺序从上往下依次写入。
  */
-unsigned char writeDataToEEprom(void* dataAddr, unsigned char dataSize, variableLists dataId)
+e_uint8 writeDataToEEprom(void* dataAddr, e_uint8 dataSize, variableLists dataId)
 {
-	unsigned int i;
-	unsigned char* tmp = NULL;
-	unsigned int eeDataAddr = 0;
-	unsigned char lastDataSize = 0, currentDataSize = 0;
+	e_uint32 i;
+	e_uint8* tmp = NULL;
+	e_uint32 eeDataAddr = 0;
+	e_uint8 lastDataSize = 0, currentDataSize = 0;
 	
 	if(dataSize == 0) return 1;
 
@@ -57,7 +57,7 @@ unsigned char writeDataToEEprom(void* dataAddr, unsigned char dataSize, variable
 	if(dataId != 0)
 	{
 		/* 写入前，先检查上一个地址有没有数据写入 */
-		eepromRead((unsigned int)(EE_MAXADDR + dataId - 1), &lastDataSize, 1);
+		eepromRead((e_uint32)(EE_MAXADDR + dataId - 1), &lastDataSize, 1);
 
 		if(lastDataSize == 0)
 		{
@@ -65,7 +65,7 @@ unsigned char writeDataToEEprom(void* dataAddr, unsigned char dataSize, variable
 		}
 		
 		/* 计算数据写入地址 */
-		tmp = (unsigned char*)malloc(dataId);
+		tmp = (e_uint8*)malloc(dataId);
 
 		if(tmp != NULL)
 		{
@@ -93,16 +93,16 @@ unsigned char writeDataToEEprom(void* dataAddr, unsigned char dataSize, variable
 	}
 
 	/* 获得当前数据大小，如果为0说明是第一次写入 */
-	eepromRead((unsigned int)(EE_MAXADDR - dataId), &currentDataSize, 1);
+	eepromRead((e_uint32)(EE_MAXADDR - dataId), &currentDataSize, 1);
 
 	if(currentDataSize == 0)
 	{
 		/* 将当前数据大小写入eeprom中的variableLists */
-		eepromWirte((unsigned int)(EE_MAXADDR - dataId), &dataSize, 1);
+		eepromWirte((e_uint32)(EE_MAXADDR - dataId), &dataSize, 1);
 	}
 	
 	/* 写入数据 */
-	eepromWirte(eeDataAddr, (unsigned char*)dataAddr, dataSize);
+	eepromWirte(eeDataAddr, (e_uint8*)dataAddr, dataSize);
 	
 	return 0;
 }
@@ -117,18 +117,18 @@ unsigned char writeDataToEEprom(void* dataAddr, unsigned char dataSize, variable
  */
 void readDataFromEEprom(void* dataAddr, variableLists dataId)
 {
-	unsigned int i;
-	unsigned char* tmp = NULL;
-	unsigned char dataSize = 0;
-	unsigned int eeDataAddr = 0;
+	e_uint32 i;
+	e_uint8* tmp = NULL;
+	e_uint8 dataSize = 0;
+	e_uint32 eeDataAddr = 0;
 	
 	/* 获得当前数据大小 */
-	eepromRead((unsigned int)(EE_MAXADDR - dataId), &dataSize, 1);
+	eepromRead((e_uint32)(EE_MAXADDR - dataId), &dataSize, 1);
 
 	/* 申请地址(不能是第一个数据) */
 	if(dataId != 0)
 	{
-		tmp = (unsigned char*)malloc(dataId);
+		tmp = (e_uint8*)malloc(dataId);
 
 		eepromRead(EE_MAXADDR - (dataId - 1), tmp, dataId);
 
@@ -142,6 +142,6 @@ void readDataFromEEprom(void* dataAddr, variableLists dataId)
 	}
 
 	/* 读取数据 */
-	eepromRead(eeDataAddr, (unsigned char*)dataAddr, dataSize);
+	eepromRead(eeDataAddr, (e_uint8*)dataAddr, dataSize);
 }
 
